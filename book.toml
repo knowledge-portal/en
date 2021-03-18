@@ -1,0 +1,9 @@
+[book]
+title = "Knowledge Portal"
+authors = ["The knowledge portal team"]
+language = "en"
+multilingual = true
+src = "src"
+
+[build]
+build-dir = "build"

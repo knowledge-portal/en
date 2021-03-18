@@ -1,0 +1,33 @@
+name: Auto Build
+
+# Trigger the workflow when something is pushed to the master branch.
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    name: Compiling mdbook
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout bring the repository's contents into this workflow job
+    - uses: actions/checkout@v2
+
+    # Setting up mdBook
+    - name: Setup mdbook
+      uses: peaceiris/actions-mdbook@v1
+      with:
+        mdbook-version: '0.4.7'
+    
+    # Build the website from markdown files
+    - name: Build website
+      run: mdbook build
+
+    - name: Deploy website
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
