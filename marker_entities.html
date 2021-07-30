@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Knowledge Portal - Knowledge Portal</title>
+        <title>Marker Entities - Knowledge Portal</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html" class="active"><strong aria-hidden="true">1.</strong> Knowledge Portal</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="common_tricks.html"><strong aria-hidden="true">1.1.</strong> Common Tricks</a></li><li class="chapter-item expanded "><a href="useful_links.html"><strong aria-hidden="true">1.2.</strong> Useful Links</a></li></ol></li><li class="chapter-item expanded "><a href="marker_entities.html"><strong aria-hidden="true">2.</strong> Marker Entities</a></li><li class="chapter-item expanded "><a href="nbt.html"><strong aria-hidden="true">3.</strong> NBT</a></li><li class="chapter-item expanded "><a href="custom_recipes.html"><strong aria-hidden="true">4.</strong> Recipes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="recipes/normal.html"><strong aria-hidden="true">4.1.</strong> Normal</a></li><li class="chapter-item expanded "><a href="recipes/with_nbt.html"><strong aria-hidden="true">4.2.</strong> With NBT</a></li></ol></li><li class="chapter-item expanded "><a href="advancements.html"><strong aria-hidden="true">5.</strong> Advancements</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="advancements/advancements.html"><strong aria-hidden="true">5.1.</strong> Creating</a></li><li class="chapter-item expanded "><a href="advancements/triggers.html"><strong aria-hidden="true">5.2.</strong> Triggers</a></li></ol></li><li class="chapter-item expanded "><a href="worldgen.html"><strong aria-hidden="true">6.</strong> Worldgen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="worldgen/biomes.html"><strong aria-hidden="true">6.1.</strong> Biomes</a></li><li class="chapter-item expanded "><a href="worldgen/features.html"><strong aria-hidden="true">6.2.</strong> Features</a></li><li class="chapter-item expanded "><a href="worldgen/structures.html"><strong aria-hidden="true">6.3.</strong> Structures</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Knowledge Portal</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="common_tricks.html"><strong aria-hidden="true">1.1.</strong> Common Tricks</a></li><li class="chapter-item expanded "><a href="useful_links.html"><strong aria-hidden="true">1.2.</strong> Useful Links</a></li></ol></li><li class="chapter-item expanded "><a href="marker_entities.html" class="active"><strong aria-hidden="true">2.</strong> Marker Entities</a></li><li class="chapter-item expanded "><a href="nbt.html"><strong aria-hidden="true">3.</strong> NBT</a></li><li class="chapter-item expanded "><a href="custom_recipes.html"><strong aria-hidden="true">4.</strong> Recipes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="recipes/normal.html"><strong aria-hidden="true">4.1.</strong> Normal</a></li><li class="chapter-item expanded "><a href="recipes/with_nbt.html"><strong aria-hidden="true">4.2.</strong> With NBT</a></li></ol></li><li class="chapter-item expanded "><a href="advancements.html"><strong aria-hidden="true">5.</strong> Advancements</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="advancements/advancements.html"><strong aria-hidden="true">5.1.</strong> Creating</a></li><li class="chapter-item expanded "><a href="advancements/triggers.html"><strong aria-hidden="true">5.2.</strong> Triggers</a></li></ol></li><li class="chapter-item expanded "><a href="worldgen.html"><strong aria-hidden="true">6.</strong> Worldgen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="worldgen/biomes.html"><strong aria-hidden="true">6.1.</strong> Biomes</a></li><li class="chapter-item expanded "><a href="worldgen/features.html"><strong aria-hidden="true">6.2.</strong> Features</a></li><li class="chapter-item expanded "><a href="worldgen/structures.html"><strong aria-hidden="true">6.3.</strong> Structures</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,18 +163,53 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="knowledge-portal"><a class="header" href="#knowledge-portal">Knowledge Portal</a></h1>
-<pre><code>TODO: make website
-</code></pre>
+                        <h1 id="marker-entities"><a class="header" href="#marker-entities">Marker Entities</a></h1>
+<p>There are many types of entity that you can use as a marker entity. Literally every mob can be a marker.
+Here I will outline a couple of them and their advantages and disadvantages</p>
+<h3 id="marker-entity"><a class="header" href="#marker-entity">Marker Entity</a></h3>
+<ul>
+<li>The best marker there is</li>
+<li>Least laggy, best for performance</li>
+<li>Most versatile</li>
+<li>No hitbox</li>
+<li>Cannot render anything</li>
+</ul>
+<h3 id="armor-stand"><a class="header" href="#armor-stand">Armor Stand</a></h3>
+<ul>
+<li>Able to render up to 3 custom model in one entity</li>
+<li>Wider render range</li>
+<li>Freedom of rotation</li>
+</ul>
+<h3 id="item-frameglowing-item-frame"><a class="header" href="#item-frameglowing-item-frame">Item Frame/Glowing Item Frame</a></h3>
+<ul>
+<li>Able to render model in one entity</li>
+<li>Allow directional placement in one item that also summons the entity</li>
+<li>Block detection, e.g. won't place in slab and will place in grass</li>
+<li>Always lit when using glowing item frame</li>
+<li>Less degrees of freedom for rotation</li>
+</ul>
+<h3 id="area-effect-cloud"><a class="header" href="#area-effect-cloud">Area Effect Cloud</a></h3>
+<ul>
+<li>Self-included timer</li>
+<li>No hitbox</li>
+<li>No real reason to use this other than to give area effect</li>
+<li>The worst marker there is</li>
+</ul>
+<p>A quick diagram to choose which marker is the best for you, by Ellivers:
+<img src="./assets/marker_entities/as_if_aec_m.png" alt="A diagram of which marker to choose" /></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="useful_links.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
                         
-                            <a rel="next" href="common_tricks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="nbt.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -186,9 +221,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a rel="prev" href="useful_links.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
                 
-                    <a rel="next" href="common_tricks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="nbt.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

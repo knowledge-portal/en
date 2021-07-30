@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Knowledge Portal</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Knowledge Portal</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="common_tricks.html"><strong aria-hidden="true">1.1.</strong> Common Tricks</a></li><li class="chapter-item expanded "><a href="useful_links.html"><strong aria-hidden="true">1.2.</strong> Useful Links</a></li></ol></li><li class="chapter-item expanded "><a href="marker_entities.html"><strong aria-hidden="true">2.</strong> Marker Entities</a></li><li class="chapter-item expanded "><a href="nbt.html"><strong aria-hidden="true">3.</strong> NBT</a></li><li class="chapter-item expanded "><a href="custom_recipes.html"><strong aria-hidden="true">4.</strong> Recipes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="recipes/normal.html"><strong aria-hidden="true">4.1.</strong> Normal</a></li><li class="chapter-item expanded "><a href="recipes/with_nbt.html"><strong aria-hidden="true">4.2.</strong> With NBT</a></li></ol></li><li class="chapter-item expanded "><a href="advancements.html"><strong aria-hidden="true">5.</strong> Advancements</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="advancements/advancements.html"><strong aria-hidden="true">5.1.</strong> Creating</a></li><li class="chapter-item expanded "><a href="advancements/triggers.html"><strong aria-hidden="true">5.2.</strong> Triggers</a></li></ol></li><li class="chapter-item expanded "><a href="worldgen.html"><strong aria-hidden="true">6.</strong> Worldgen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="worldgen/biomes.html"><strong aria-hidden="true">6.1.</strong> Biomes</a></li><li class="chapter-item expanded "><a href="worldgen/features.html"><strong aria-hidden="true">6.2.</strong> Features</a></li><li class="chapter-item expanded "><a href="worldgen/structures.html"><strong aria-hidden="true">6.3.</strong> Structures</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -168,6 +168,417 @@
                         <h1 id="knowledge-portal"><a class="header" href="#knowledge-portal">Knowledge Portal</a></h1>
 <pre><code>TODO: make website
 </code></pre>
+<h1 id="good-datapack-practices-and-common-tricks"><a class="header" href="#good-datapack-practices-and-common-tricks">Good Datapack Practices and Common Tricks</a></h1>
+<p>Written by Ellivers</p>
+<h2 id="structuring-and-consistency"><a class="header" href="#structuring-and-consistency">Structuring and Consistency</a></h2>
+<p>An organized structure to your data pack's folders and file names always helps you understand your code better and leads to less bugs.
+Place files that have something in common in the same folder, and name them based on what their purpose is.</p>
+<p>Consistency in naming stuff like tags, files, and scores can help keep you sane. Always have a clear structure in place, such as prefixing tag and objective names with your namespace (<code>namespace.name</code>) and giving tags different categories (<code>namespace.entity.name</code>, <code>namespace.block.name</code>).</p>
+<p>If you are unsure of how a good structure could look, you could take a look at some vanilla assets, such as the lang file or the built-in data pack, as well as get ideas from looking at data packs that other people have made.</p>
+<h2 id="commenting"><a class="header" href="#commenting">Commenting</a></h2>
+<p>Comments are very important and a huge help when working with functions, as well as any code in general. Ideally, every function should have at least one line of comments in it. A comment is any line that starts with a <code>#</code>.</p>
+<p>Here is how I like to structure my comments:</p>
+<pre><code class="language-mcfunction"># Called by namespace:path/to/function
+# Short description of what this function does
+# More describing if needed
+
+# Description of what these commands do
+command 1
+command 2
+
+# Description of what these commands do
+command 3
+command 4
+</code></pre>
+<h2 id="performance"><a class="header" href="#performance">Performance</a></h2>
+<p>Functions in data packs can easily lead to bad performance. Here is a list of some things to be aware of:</p>
+<ul>
+<li>
+<p><strong>Multiple Entity Selectors</strong></p>
+<p><strong>@e</strong> is an essential selector as it is able to select all entities, but it is also a huge reason for command lag.
+Therefore, it should be avoided in large quantities as much as possible. If you execute a function as an entity, you can then use the <code>@s</code> selector to refer to that entity. <code>@s</code> is the selector you should be using the most.</p>
+<p>Example of splitting an <code>@e</code> selector into multiple <code>@s</code>:</p>
+<p>function1:</p>
+<pre><code class="language-mcfunction"># Executes as all pigs that have the &quot;namespace.mytag&quot; tag
+execute as @e[type=minecraft:pig,tag=namespace.mytag] run function namespace:function2
+</code></pre>
+<p>function2:</p>
+<pre><code class="language-mcfunction"># Called by namespace:function1
+# Runs commands as all pigs that have the &quot;namespace.mytag&quot; tag
+
+say My name is @s
+kill @s
+say ouch
+</code></pre>
+<p><strong>@a</strong> is another selector that selects multiple entities.
+It only selects players, and there are usually not nearly as many players as general entities in a world, so it does not contribute to lag as much as <code>@e</code>. However, if you have a lot of <code>@a</code> selectors you should still be splitting them into <code>@s</code>, the same way you do with <code>@e</code>.</p>
+</li>
+<li>
+<p><strong>NBT Checks</strong></p>
+<p>Checking for NBT data hurts performance quite a lot, and is something that you should avoid as much as possible.</p>
+<p>Example of a bad NBT check:</p>
+<pre><code class="language-mcfunction"># Check if the executing player is holding a feather
+execute if entity @s[nbt={SelectedItem:{id:&quot;minecraft:feather&quot;}}]
+</code></pre>
+<p><strong>Predicates</strong></p>
+<p>Predicates are JSON files that can be used in combination with commands to check for all kinds of things.</p>
+<p>Often, NBT checks can be replaced with predicates to improve performance. This is the case for the command shown above.</p>
+<p>Here is what a predicate replacing the NBT check above would look like:</p>
+<pre><code class="language-json">{
+  &quot;condition&quot;: &quot;minecraft:entity_properties&quot;,
+  &quot;entity&quot;: &quot;this&quot;,
+  &quot;predicate&quot;: {
+      &quot;equipment&quot;: {
+          &quot;mainhand&quot;: {
+              &quot;item&quot;: &quot;minecraft:feather&quot;
+          }
+      }
+  }
+}
+</code></pre>
+<p>It could replace the check in the command like this:</p>
+<pre><code class="language-mcfunction"># Check if the executing player is holding a feather
+execute if predicate namespace:path/to/predicate
+</code></pre>
+<p>However, predicates will not help if you only use them to check using the <code>nbt</code> key.
+This is an example of something that does <em>not</em> help performance:</p>
+<pre><code>{
+  &quot;condition&quot;: &quot;minecraft:entity_properties&quot;,
+  &quot;entity&quot;: &quot;this&quot;,
+  &quot;predicate&quot;: {
+      &quot;nbt&quot;: &quot;{OnGround:1b}&quot;
+  }
+}
+</code></pre>
+<p>Notice how the predicate above only checks for the property <code>OnGround:1b</code>, and does not use any keys other than <code>nbt</code>.
+In this case, it is better to simply check the NBT in the command directly:</p>
+<pre><code class="language-mcfunction"># Check if the executing entity is on the ground
+execute if entity @s[nbt={OnGround:1b}]
+</code></pre>
+<p><strong>Storage</strong></p>
+<p>Storage is global NBT that can contain anything you want and that can be accessed from anywhere. It is the most performance-friendly option for storing NBT, but is not specific to any entity or block.</p>
+<p>If you need to either modify NBT several times, or check it multiple times while predicates are not applicable, using storage can be a lot more efficient.</p>
+<p>Here is an example:</p>
+<pre><code class="language-mcfunction"># Set the X, Y, and Z coordinates of the executing entity's position
+
+data modify storage namespace:name Key set from entity @s Pos
+data modify storage namespace:name Key[0] set value 3.0d
+data modify storage namespace:name Key[1] set value 7.0d
+data modify storage namespace:name Key[2] set value 85.0d
+data modify entity @s Pos set from storage namespace:name Key
+</code></pre>
+</li>
+</ul>
+<h2 id="advancements"><a class="header" href="#advancements">Advancements</a></h2>
+<p>When you need to detect something a player does, like placing a block, first see if that is something an advancement can detect, instead of creating a scoreboard objective for it or perhaps running a check for it every tick. Advancements are very useful and powerful, as they do not cause any lag (with the exception of the <code>tick</code> advancement trigger) and can be used to run a function when something happens.</p>
+<h2 id="fakeplayers"><a class="header" href="#fakeplayers">Fakeplayers</a></h2>
+<p>&quot;Fakeplayers&quot; are an extremely useful trick used in order to avoid creating big amounts of scoreboard objectives.
+Simply give a score to a nonexistant player, and you are able to make way more variables using only one objective and no entities.</p>
+<p>Here is an example of what you can do using fakeplayers:</p>
+<pre><code class="language-mcfunction"># Do some math
+
+scoreboard players set #five objective 5
+
+scoreboard players operation #variable1 objective *= #five objective
+scoreboard players operation #variable2 objective += #variable1 objective
+</code></pre>
+<p>Notice how the fakeplayer names are prefixed with <code>#</code>. This is not needed, but it makes sure that the fakeplayer's name can't happen to be the same as a real player's name, since real players can't have <code>#</code> in their name.
+Fakeplayers are global and not applicable if you need to tie a score to an entity.</p>
+<h1 id="useful-links"><a class="header" href="#useful-links">Useful Links</a></h1>
+<ol>
+<li>Aeldrion's standard command library
+<ul>
+<li><a href="https://github.com/Aeldrion/AESTD">https://github.com/Aeldrion/AESTD</a></li>
+</ul>
+</li>
+</ol>
+<p>Useful Generators:</p>
+<ol>
+<li>Basically everything you need in a datapack except functions.
+Loot Table/Predicate/Item Modifier/Advancement/Dimension/Dimension Type/World Settings/Worldgen:
+<ul>
+<li><a href="https://misode.github.io/">https://misode.github.io/</a></li>
+</ul>
+</li>
+<li>Good for JSON text or for item generations.
+Recipes/JSON text/Firework/Tellraw/Potion/Armor Color/Banners Pattern:
+<ul>
+<li><a href="https://minecraft.tools/en/">https://minecraft.tools/en/</a></li>
+</ul>
+</li>
+</ol>
+<h1 id="marker-entities"><a class="header" href="#marker-entities">Marker Entities</a></h1>
+<p>There are many types of entity that you can use as a marker entity. Literally every mob can be a marker.
+Here I will outline a couple of them and their advantages and disadvantages</p>
+<h3 id="marker-entity"><a class="header" href="#marker-entity">Marker Entity</a></h3>
+<ul>
+<li>The best marker there is</li>
+<li>Least laggy, best for performance</li>
+<li>Most versatile</li>
+<li>No hitbox</li>
+<li>Cannot render anything</li>
+</ul>
+<h3 id="armor-stand"><a class="header" href="#armor-stand">Armor Stand</a></h3>
+<ul>
+<li>Able to render up to 3 custom model in one entity</li>
+<li>Wider render range</li>
+<li>Freedom of rotation</li>
+</ul>
+<h3 id="item-frameglowing-item-frame"><a class="header" href="#item-frameglowing-item-frame">Item Frame/Glowing Item Frame</a></h3>
+<ul>
+<li>Able to render model in one entity</li>
+<li>Allow directional placement in one item that also summons the entity</li>
+<li>Block detection, e.g. won't place in slab and will place in grass</li>
+<li>Always lit when using glowing item frame</li>
+<li>Less degrees of freedom for rotation</li>
+</ul>
+<h3 id="area-effect-cloud"><a class="header" href="#area-effect-cloud">Area Effect Cloud</a></h3>
+<ul>
+<li>Self-included timer</li>
+<li>No hitbox</li>
+<li>No real reason to use this other than to give area effect</li>
+<li>The worst marker there is</li>
+</ul>
+<p>A quick diagram to choose which marker is the best for you, by Ellivers:
+<img src="./assets/marker_entities/as_if_aec_m.png" alt="A diagram of which marker to choose" /></p>
+<h1 id="nbt"><a class="header" href="#nbt">NBT</a></h1>
+<h3 id="what-is-nbt"><a class="header" href="#what-is-nbt">What is NBT?</a></h3>
+<p>A NBT (Named Binary Tag) is a format used by minecraft used to record data, like tool and armour durability, saved structures, fireworks, and banners.</p>
+<h3 id="comparing-arbitrary-nbt-values"><a class="header" href="#comparing-arbitrary-nbt-values">Comparing Arbitrary NBT Values</a></h3>
+<p>How can be used to test if any given NBT values are equal?</p>
+<p>The idea is to attempt to write both values to the same location, where the second operation will result in either a success or a failure depending on whether they are equal.
+The explanation as to why this works is that if the values are equal, the second operation attempts to write a value that already exists in the destination, and therefore not change anything and give a negative success.</p>
+<p>An example function that compares the NBT values at <code>storage kp:temp value.A</code> and <code>storage kp:temp value.B</code>, and stores the result in the <code>not_equal kp.temp</code> fake player:</p>
+<pre><code class="language-mcfunction"># Create 'kp.temp' objective
+scoreboard objectives add kp.temp dummy
+# Prepare storage values
+data modify storage kp:temp value.A set value &quot;string 1&quot;
+data modify storage kp:temp value.B set value &quot;string 2&quot;
+
+# Copy both values to 'storage kp:temp compare', store success of second operation
+data modify storage kp:temp compare set from storage kp:temp value.A
+execute store success score not_equal kp.temp run data modify storage kp:temp compare set from storage kp:temp value.B
+
+# Print result
+execute if score not_equal kp.temp matches 0 run tellraw @a &quot;The storage values are equal.&quot;
+execute if score not_equal kp.temp matches 1 run tellraw @a &quot;The storage values are different.&quot;
+</code></pre>
+<h1 id="custom-recipes"><a class="header" href="#custom-recipes">Custom Recipes</a></h1>
+<p>In Minecraft, recipes are used by the player to craft or create certain items via
+different crafting blocks, such as the crafting table, furnace, and stonecutter.</p>
+<p>Custom crafting recipes can be added to a datapack via json files, which you can
+learn about <a href="./recipes/normal.html">here</a>. Note that you cannot use custom nbt datas
+as input or output for the recipes this way. However, there is a way to implement
+custom nbt output with advancements and rewards, which you can learn about <a href="./recipes/with_nbt.html">here</a>.</p>
+<h1 id="custom-recipes-via-json"><a class="header" href="#custom-recipes-via-json">Custom Recipes Via JSON</a></h1>
+<p>How to add custom recipes using datapacks:
+There are two types of crafting when it comes to custom recipes, shaped, and shapeless, shaped requires a specific pattern of items to be put into the crafting slots, and shapeless only requires the items
+Heres an example for shaped crafting, creating a powered rail;</p>
+<pre><code class="language-json">{
+&quot;type&quot;: &quot;minecraft_crafting_shaped&quot;,
+&quot;pattern&quot;: [
+&quot;x x&quot;
+&quot;x#x&quot;
+&quot;x!x&quot;
+],
+&quot;key&quot;:{
+&quot;x&quot;:{
+&quot;item&quot;: &quot;minecraft:gold&quot;
+},
+&quot;#&quot;:{
+&quot;item&quot;: &quot;minecraft:stick&quot;
+},
+&quot;!&quot;:{
+&quot;item&quot;: &quot;minecraft_redstone&quot;
+}
+},
+&quot;result&quot;: {
+&quot;count&quot;: 6 
+&quot;item&quot;: &quot;minecraft:powered_rail&quot;
+} 
+}
+</code></pre>
+<p>Type: type of recipe, smelting, crafting:shapeless, crafting:special, etc
+Pattern:  the pattern for the recipe in a crafting table
+Key: explains what characters mean for each item (ie # = golden carrot)
+Item: an item specified
+Result: the resulting item from a recipe
+Count: how many items you'll get from a said recipe, default is one
+However, if you wanted the recipe to be shapeless, you could write it like this</p>
+<pre><code class="language-json">{
+&quot;type&quot;: &quot;minecraft:shapeless&quot; 
+&quot;ingredients&quot;: {
+&quot;item&quot;: &quot;minecraft:gold&quot;,
+&quot;item&quot;: &quot;minecraft:stick&quot;,
+&quot;item&quot;: &quot;minecraft:redstone&quot;
+}
+&quot;result&quot;: {
+&quot;count&quot;: 6 
+&quot;item&quot;: &quot;minecraft:powered_rail&quot; 
+}
+}
+</code></pre>
+<p>There's also another category called special crafting, which deals with things like banners, leather armour dye, and fireworks, mainly things with nbt tags (check #nbt for more info). </p>
+<p>For smelting, smoking, and blasting, the format is the same, you just go to the type tag  and switch out the words;
+<code>{&quot;type&quot;: &quot;minecraft:smelting&quot;}</code></p>
+<p>or
+<code>{&quot;type&quot;: &quot;minecraft:smoking&quot;}</code></p>
+<p>Let's make an example. This recipe will make it so if you use a blast furnace to smelt a gold ingot, it'll turn into 9 nuggets</p>
+<pre><code class="language-json">{
+&quot;type&quot;: &quot;minecraft:blasting&quot;
+&quot;ingredients&quot;:
+{
+&quot;item&quot;: &quot;minecraft:coal&quot;
+&quot;item&quot;: &quot;minecraft:gold_ingot&quot;
+}
+&quot;result&quot;{
+&quot;item&quot;:&quot;minecraft:gold_nugget&quot;
+&quot;count&quot;: 9
+}
+}
+</code></pre>
+<p>Ingredients: a list of items needed in a recipe</p>
+<p>For smithing, you can create items using the smithing table, such as a diamond block and one netherite ingot would turn into a netherite block, lets give it a try.</p>
+<pre><code class="language-json">{
+&quot;type&quot;: &quot;minecraft:smithing&quot;
+&quot;base&quot;: {
+&quot;item&quot;:&quot;minecraft:diamond_block&quot;
+}
+&quot;addition&quot;: {
+&quot;item&quot;:&quot;minecraft:netherite_ingot&quot;
+}
+&quot;result&quot;: {
+&quot;item&quot;:&quot;minecraft:netherite_block&quot;
+}
+}
+</code></pre>
+<p>Base: the first item in the smithing table
+Addition: the second item in a smithing table</p>
+<h1 id="custom-recipes-with-nbt"><a class="header" href="#custom-recipes-with-nbt">Custom Recipes with NBT</a></h1>
+<h3 id="todo----note-theres-also-an-advanced-method-to-prevent-give-all-recipe-packs-from-breaking-your-recipes"><a class="header" href="#todo----note-theres-also-an-advanced-method-to-prevent-give-all-recipe-packs-from-breaking-your-recipes">TODO -- Note; There’s also an advanced method to prevent give all recipe packs from breaking your recipes</a></h3>
+<p>The knowledge book method is a technique used to craft items with custom nbt tags. 
+NOTE: this method still doesn’t allow for nbt checks in the recipe items, so you 
+can only get items with custom nbt as a crafting output, not input. That said, 
+let’s get started. In this case I'll show you how to craft an emerald sword as an 
+example.</p>
+<p>Go to https://crafting.thedestruc7i0n.ca/ and create your recipe. It’s important 
+that you place the knowledge book item in the result slot. In our case, since we’re 
+making an emerald sword the output will be something like this, and it's gonna be 
+called emerald_sword:</p>
+<pre><code class="language-json">{
+    &quot;type&quot;: &quot;minecraft:crafting_shaped&quot;,
+    &quot;pattern&quot;: [
+        &quot;#&quot;,
+        &quot;#&quot;,
+        &quot;/&quot;
+    ],
+    &quot;key&quot;: {
+        &quot;#&quot;: {
+            &quot;item&quot;: &quot;minecraft:emerald&quot;
+        },
+        &quot;/&quot;: {
+            &quot;item&quot;: &quot;minecraft:stick&quot;
+        }
+    },
+    &quot;result&quot;: {
+        &quot;item&quot;: &quot;minecraft:knowledge_book&quot;,
+        &quot;count&quot;: 1
+    }
+}
+</code></pre>
+<p>you can download the .json file for this and put in in your datapack’s recipe folder.
+Then, you need to create a loot table that gives the player the item WITH NBT that 
+you want. Both can be generated here: https://misode.github.io/</p>
+<p>name this json file <code>emerald_sword.json</code></p>
+<pre><code class="language-json">{
+  &quot;pools&quot;: [
+    {
+      &quot;rolls&quot;: 1,
+      &quot;entries&quot;: [
+        {
+          &quot;type&quot;: &quot;minecraft:item&quot;,
+          &quot;name&quot;: &quot;minecraft:diamond_sword&quot;,
+          &quot;functions&quot;: [
+            {
+              &quot;function&quot;: &quot;minecraft:set_name&quot;,
+              &quot;entity&quot;: &quot;this&quot;,
+              &quot;name&quot;: {
+                &quot;text&quot;: &quot;100% Real Emerald sword&quot;,
+                &quot;italic&quot;: false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<p>This loot table will be rewarded to the player when they unlock the advancement 
+that triggers when the recipe is unlocked and also rewards the function that 
+clears the knowledge book and revokes the advancement itself. So, we need to 
+create the following advancements:</p>
+<p>This first advancement will be called root, it's function is to prevent 
+&quot;unlock all recipe packs&quot; from giving you the items randomly</p>
+<pre><code>{
+  &quot;criteria&quot;: {
+    &quot;impossible&quot;: {
+      &quot;trigger&quot;: &quot;minecraft:impossible&quot;
+    }
+  },
+  &quot;requirements&quot;: [
+    [
+      &quot;impossible&quot;
+    ]
+  ]
+}
+
+and emerald_sword
+{
+    &quot;parent&quot;: &quot;kp:recipes/nbt/root&quot;,
+  &quot;rewards&quot;: {
+    &quot;function&quot;: &quot;kp:nbt_recipe&quot;,
+    &quot;loot&quot;: [&quot;kp:items/emerald_sword&quot;]
+  },
+  &quot;criteria&quot;: {
+    &quot;has_the_recipe&quot;: {
+      &quot;trigger&quot;: &quot;minecraft:recipe_unlocked&quot;,
+      &quot;conditions&quot;: {
+        &quot;recipe&quot;: &quot;kp:nbt/emerald_sword&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p>Lastly, we need to create the function that resets everything and clears the 
+knowledge book from the player
+<code>nbt_recipe.mcfunction</code>:</p>
+<pre><code class="language-mcfunction">advancement revoke @s through kp:recipes/nbt/root
+clear @s knowledge_book
+stopsound @s * minecraft:entity.item.pickup
+recipe take @s kp:nbt/emerald_sword
+</code></pre>
+<p>NOTE: you don't have to create multiple of these functions for every recipe you
+add, you just need to add the command that takes the recipe recipe take @s kp:nbt/...</p>
+<h3 id="todo-----add-download-for-pack-that-asdru-linked"><a class="header" href="#todo-----add-download-for-pack-that-asdru-linked">TODO --  add download for pack that asdru linked</a></h3>
+<h1 id="advancements-1"><a class="header" href="#advancements-1">Advancements</a></h1>
+<h3 id="define"><a class="header" href="#define">define</a></h3>
+<p><code>TODO</code> define advancement</p>
+<h3 id="potential-use-cases"><a class="header" href="#potential-use-cases">potential use cases</a></h3>
+<p><code>TODO</code> write use cases in paragraph and list form</p>
+<h3 id="creating-and-using-advancements"><a class="header" href="#creating-and-using-advancements">Creating and Using Advancements</a></h3>
+<p>You can learn how to create and use advancements <a href="./advancements/advancements.html">here</a>.</p>
+<h3 id="triggers"><a class="header" href="#triggers">Triggers</a></h3>
+<p>You can find a list of advancement tiggers and their descriptions <a href="./advancements/triggers.html">here</a>.</p>
+<h1 id="creating-and-using-advancements-1"><a class="header" href="#creating-and-using-advancements-1">Creating and Using Advancements</a></h1>
+<p>Words go here</p>
+<h3 id="todo"><a class="header" href="#todo">TODO</a></h3>
+<p>Writeup this page</p>
+<h1 id="triggers-1"><a class="header" href="#triggers-1">Triggers</a></h1>
+<h1 id="todo-1"><a class="header" href="#todo-1">TODO</a></h1>
+<h1 id="todo-2"><a class="header" href="#todo-2">TODO</a></h1>
+<h1 id="todo-3"><a class="header" href="#todo-3">TODO</a></h1>
+<h1 id="todo-4"><a class="header" href="#todo-4">TODO</a></h1>
 
                     </main>
 

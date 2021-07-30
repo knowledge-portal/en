@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Knowledge Portal - Knowledge Portal</title>
+        <title>Recipes - Knowledge Portal</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html" class="active"><strong aria-hidden="true">1.</strong> Knowledge Portal</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="common_tricks.html"><strong aria-hidden="true">1.1.</strong> Common Tricks</a></li><li class="chapter-item expanded "><a href="useful_links.html"><strong aria-hidden="true">1.2.</strong> Useful Links</a></li></ol></li><li class="chapter-item expanded "><a href="marker_entities.html"><strong aria-hidden="true">2.</strong> Marker Entities</a></li><li class="chapter-item expanded "><a href="nbt.html"><strong aria-hidden="true">3.</strong> NBT</a></li><li class="chapter-item expanded "><a href="custom_recipes.html"><strong aria-hidden="true">4.</strong> Recipes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="recipes/normal.html"><strong aria-hidden="true">4.1.</strong> Normal</a></li><li class="chapter-item expanded "><a href="recipes/with_nbt.html"><strong aria-hidden="true">4.2.</strong> With NBT</a></li></ol></li><li class="chapter-item expanded "><a href="advancements.html"><strong aria-hidden="true">5.</strong> Advancements</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="advancements/advancements.html"><strong aria-hidden="true">5.1.</strong> Creating</a></li><li class="chapter-item expanded "><a href="advancements/triggers.html"><strong aria-hidden="true">5.2.</strong> Triggers</a></li></ol></li><li class="chapter-item expanded "><a href="worldgen.html"><strong aria-hidden="true">6.</strong> Worldgen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="worldgen/biomes.html"><strong aria-hidden="true">6.1.</strong> Biomes</a></li><li class="chapter-item expanded "><a href="worldgen/features.html"><strong aria-hidden="true">6.2.</strong> Features</a></li><li class="chapter-item expanded "><a href="worldgen/structures.html"><strong aria-hidden="true">6.3.</strong> Structures</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Knowledge Portal</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="common_tricks.html"><strong aria-hidden="true">1.1.</strong> Common Tricks</a></li><li class="chapter-item expanded "><a href="useful_links.html"><strong aria-hidden="true">1.2.</strong> Useful Links</a></li></ol></li><li class="chapter-item expanded "><a href="marker_entities.html"><strong aria-hidden="true">2.</strong> Marker Entities</a></li><li class="chapter-item expanded "><a href="nbt.html"><strong aria-hidden="true">3.</strong> NBT</a></li><li class="chapter-item expanded "><a href="custom_recipes.html" class="active"><strong aria-hidden="true">4.</strong> Recipes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="recipes/normal.html"><strong aria-hidden="true">4.1.</strong> Normal</a></li><li class="chapter-item expanded "><a href="recipes/with_nbt.html"><strong aria-hidden="true">4.2.</strong> With NBT</a></li></ol></li><li class="chapter-item expanded "><a href="advancements.html"><strong aria-hidden="true">5.</strong> Advancements</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="advancements/advancements.html"><strong aria-hidden="true">5.1.</strong> Creating</a></li><li class="chapter-item expanded "><a href="advancements/triggers.html"><strong aria-hidden="true">5.2.</strong> Triggers</a></li></ol></li><li class="chapter-item expanded "><a href="worldgen.html"><strong aria-hidden="true">6.</strong> Worldgen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="worldgen/biomes.html"><strong aria-hidden="true">6.1.</strong> Biomes</a></li><li class="chapter-item expanded "><a href="worldgen/features.html"><strong aria-hidden="true">6.2.</strong> Features</a></li><li class="chapter-item expanded "><a href="worldgen/structures.html"><strong aria-hidden="true">6.3.</strong> Structures</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,18 +163,26 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="knowledge-portal"><a class="header" href="#knowledge-portal">Knowledge Portal</a></h1>
-<pre><code>TODO: make website
-</code></pre>
+                        <h1 id="custom-recipes"><a class="header" href="#custom-recipes">Custom Recipes</a></h1>
+<p>In Minecraft, recipes are used by the player to craft or create certain items via
+different crafting blocks, such as the crafting table, furnace, and stonecutter.</p>
+<p>Custom crafting recipes can be added to a datapack via json files, which you can
+learn about <a href="./recipes/normal.html">here</a>. Note that you cannot use custom nbt datas
+as input or output for the recipes this way. However, there is a way to implement
+custom nbt output with advancements and rewards, which you can learn about <a href="./recipes/with_nbt.html">here</a>.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="nbt.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
                         
-                            <a rel="next" href="common_tricks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="recipes/normal.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -186,9 +194,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a rel="prev" href="nbt.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
                 
-                    <a rel="next" href="common_tricks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="recipes/normal.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

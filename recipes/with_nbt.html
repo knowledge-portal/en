@@ -1,0 +1,341 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>With NBT - Knowledge Portal</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> Knowledge Portal</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../common_tricks.html"><strong aria-hidden="true">1.1.</strong> Common Tricks</a></li><li class="chapter-item expanded "><a href="../useful_links.html"><strong aria-hidden="true">1.2.</strong> Useful Links</a></li></ol></li><li class="chapter-item expanded "><a href="../marker_entities.html"><strong aria-hidden="true">2.</strong> Marker Entities</a></li><li class="chapter-item expanded "><a href="../nbt.html"><strong aria-hidden="true">3.</strong> NBT</a></li><li class="chapter-item expanded "><a href="../custom_recipes.html"><strong aria-hidden="true">4.</strong> Recipes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../recipes/normal.html"><strong aria-hidden="true">4.1.</strong> Normal</a></li><li class="chapter-item expanded "><a href="../recipes/with_nbt.html" class="active"><strong aria-hidden="true">4.2.</strong> With NBT</a></li></ol></li><li class="chapter-item expanded "><a href="../advancements.html"><strong aria-hidden="true">5.</strong> Advancements</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../advancements/advancements.html"><strong aria-hidden="true">5.1.</strong> Creating</a></li><li class="chapter-item expanded "><a href="../advancements/triggers.html"><strong aria-hidden="true">5.2.</strong> Triggers</a></li></ol></li><li class="chapter-item expanded "><a href="../worldgen.html"><strong aria-hidden="true">6.</strong> Worldgen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../worldgen/biomes.html"><strong aria-hidden="true">6.1.</strong> Biomes</a></li><li class="chapter-item expanded "><a href="../worldgen/features.html"><strong aria-hidden="true">6.2.</strong> Features</a></li><li class="chapter-item expanded "><a href="../worldgen/structures.html"><strong aria-hidden="true">6.3.</strong> Structures</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Knowledge Portal</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="custom-recipes-with-nbt"><a class="header" href="#custom-recipes-with-nbt">Custom Recipes with NBT</a></h1>
+<h3 id="todo----note-theres-also-an-advanced-method-to-prevent-give-all-recipe-packs-from-breaking-your-recipes"><a class="header" href="#todo----note-theres-also-an-advanced-method-to-prevent-give-all-recipe-packs-from-breaking-your-recipes">TODO -- Note; There’s also an advanced method to prevent give all recipe packs from breaking your recipes</a></h3>
+<p>The knowledge book method is a technique used to craft items with custom nbt tags. 
+NOTE: this method still doesn’t allow for nbt checks in the recipe items, so you 
+can only get items with custom nbt as a crafting output, not input. That said, 
+let’s get started. In this case I'll show you how to craft an emerald sword as an 
+example.</p>
+<p>Go to https://crafting.thedestruc7i0n.ca/ and create your recipe. It’s important 
+that you place the knowledge book item in the result slot. In our case, since we’re 
+making an emerald sword the output will be something like this, and it's gonna be 
+called emerald_sword:</p>
+<pre><code class="language-json">{
+    &quot;type&quot;: &quot;minecraft:crafting_shaped&quot;,
+    &quot;pattern&quot;: [
+        &quot;#&quot;,
+        &quot;#&quot;,
+        &quot;/&quot;
+    ],
+    &quot;key&quot;: {
+        &quot;#&quot;: {
+            &quot;item&quot;: &quot;minecraft:emerald&quot;
+        },
+        &quot;/&quot;: {
+            &quot;item&quot;: &quot;minecraft:stick&quot;
+        }
+    },
+    &quot;result&quot;: {
+        &quot;item&quot;: &quot;minecraft:knowledge_book&quot;,
+        &quot;count&quot;: 1
+    }
+}
+</code></pre>
+<p>you can download the .json file for this and put in in your datapack’s recipe folder.
+Then, you need to create a loot table that gives the player the item WITH NBT that 
+you want. Both can be generated here: https://misode.github.io/</p>
+<p>name this json file <code>emerald_sword.json</code></p>
+<pre><code class="language-json">{
+  &quot;pools&quot;: [
+    {
+      &quot;rolls&quot;: 1,
+      &quot;entries&quot;: [
+        {
+          &quot;type&quot;: &quot;minecraft:item&quot;,
+          &quot;name&quot;: &quot;minecraft:diamond_sword&quot;,
+          &quot;functions&quot;: [
+            {
+              &quot;function&quot;: &quot;minecraft:set_name&quot;,
+              &quot;entity&quot;: &quot;this&quot;,
+              &quot;name&quot;: {
+                &quot;text&quot;: &quot;100% Real Emerald sword&quot;,
+                &quot;italic&quot;: false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<p>This loot table will be rewarded to the player when they unlock the advancement 
+that triggers when the recipe is unlocked and also rewards the function that 
+clears the knowledge book and revokes the advancement itself. So, we need to 
+create the following advancements:</p>
+<p>This first advancement will be called root, it's function is to prevent 
+&quot;unlock all recipe packs&quot; from giving you the items randomly</p>
+<pre><code>{
+  &quot;criteria&quot;: {
+    &quot;impossible&quot;: {
+      &quot;trigger&quot;: &quot;minecraft:impossible&quot;
+    }
+  },
+  &quot;requirements&quot;: [
+    [
+      &quot;impossible&quot;
+    ]
+  ]
+}
+
+and emerald_sword
+{
+    &quot;parent&quot;: &quot;kp:recipes/nbt/root&quot;,
+  &quot;rewards&quot;: {
+    &quot;function&quot;: &quot;kp:nbt_recipe&quot;,
+    &quot;loot&quot;: [&quot;kp:items/emerald_sword&quot;]
+  },
+  &quot;criteria&quot;: {
+    &quot;has_the_recipe&quot;: {
+      &quot;trigger&quot;: &quot;minecraft:recipe_unlocked&quot;,
+      &quot;conditions&quot;: {
+        &quot;recipe&quot;: &quot;kp:nbt/emerald_sword&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p>Lastly, we need to create the function that resets everything and clears the 
+knowledge book from the player
+<code>nbt_recipe.mcfunction</code>:</p>
+<pre><code class="language-mcfunction">advancement revoke @s through kp:recipes/nbt/root
+clear @s knowledge_book
+stopsound @s * minecraft:entity.item.pickup
+recipe take @s kp:nbt/emerald_sword
+</code></pre>
+<p>NOTE: you don't have to create multiple of these functions for every recipe you
+add, you just need to add the command that takes the recipe recipe take @s kp:nbt/...</p>
+<h3 id="todo-----add-download-for-pack-that-asdru-linked"><a class="header" href="#todo-----add-download-for-pack-that-asdru-linked">TODO --  add download for pack that asdru linked</a></h3>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../recipes/normal.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../advancements.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../recipes/normal.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../advancements.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

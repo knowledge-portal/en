@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Knowledge Portal - Knowledge Portal</title>
+        <title>NBT - Knowledge Portal</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html" class="active"><strong aria-hidden="true">1.</strong> Knowledge Portal</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="common_tricks.html"><strong aria-hidden="true">1.1.</strong> Common Tricks</a></li><li class="chapter-item expanded "><a href="useful_links.html"><strong aria-hidden="true">1.2.</strong> Useful Links</a></li></ol></li><li class="chapter-item expanded "><a href="marker_entities.html"><strong aria-hidden="true">2.</strong> Marker Entities</a></li><li class="chapter-item expanded "><a href="nbt.html"><strong aria-hidden="true">3.</strong> NBT</a></li><li class="chapter-item expanded "><a href="custom_recipes.html"><strong aria-hidden="true">4.</strong> Recipes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="recipes/normal.html"><strong aria-hidden="true">4.1.</strong> Normal</a></li><li class="chapter-item expanded "><a href="recipes/with_nbt.html"><strong aria-hidden="true">4.2.</strong> With NBT</a></li></ol></li><li class="chapter-item expanded "><a href="advancements.html"><strong aria-hidden="true">5.</strong> Advancements</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="advancements/advancements.html"><strong aria-hidden="true">5.1.</strong> Creating</a></li><li class="chapter-item expanded "><a href="advancements/triggers.html"><strong aria-hidden="true">5.2.</strong> Triggers</a></li></ol></li><li class="chapter-item expanded "><a href="worldgen.html"><strong aria-hidden="true">6.</strong> Worldgen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="worldgen/biomes.html"><strong aria-hidden="true">6.1.</strong> Biomes</a></li><li class="chapter-item expanded "><a href="worldgen/features.html"><strong aria-hidden="true">6.2.</strong> Features</a></li><li class="chapter-item expanded "><a href="worldgen/structures.html"><strong aria-hidden="true">6.3.</strong> Structures</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Knowledge Portal</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="common_tricks.html"><strong aria-hidden="true">1.1.</strong> Common Tricks</a></li><li class="chapter-item expanded "><a href="useful_links.html"><strong aria-hidden="true">1.2.</strong> Useful Links</a></li></ol></li><li class="chapter-item expanded "><a href="marker_entities.html"><strong aria-hidden="true">2.</strong> Marker Entities</a></li><li class="chapter-item expanded "><a href="nbt.html" class="active"><strong aria-hidden="true">3.</strong> NBT</a></li><li class="chapter-item expanded "><a href="custom_recipes.html"><strong aria-hidden="true">4.</strong> Recipes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="recipes/normal.html"><strong aria-hidden="true">4.1.</strong> Normal</a></li><li class="chapter-item expanded "><a href="recipes/with_nbt.html"><strong aria-hidden="true">4.2.</strong> With NBT</a></li></ol></li><li class="chapter-item expanded "><a href="advancements.html"><strong aria-hidden="true">5.</strong> Advancements</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="advancements/advancements.html"><strong aria-hidden="true">5.1.</strong> Creating</a></li><li class="chapter-item expanded "><a href="advancements/triggers.html"><strong aria-hidden="true">5.2.</strong> Triggers</a></li></ol></li><li class="chapter-item expanded "><a href="worldgen.html"><strong aria-hidden="true">6.</strong> Worldgen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="worldgen/biomes.html"><strong aria-hidden="true">6.1.</strong> Biomes</a></li><li class="chapter-item expanded "><a href="worldgen/features.html"><strong aria-hidden="true">6.2.</strong> Features</a></li><li class="chapter-item expanded "><a href="worldgen/structures.html"><strong aria-hidden="true">6.3.</strong> Structures</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,8 +163,27 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="knowledge-portal"><a class="header" href="#knowledge-portal">Knowledge Portal</a></h1>
-<pre><code>TODO: make website
+                        <h1 id="nbt"><a class="header" href="#nbt">NBT</a></h1>
+<h3 id="what-is-nbt"><a class="header" href="#what-is-nbt">What is NBT?</a></h3>
+<p>A NBT (Named Binary Tag) is a format used by minecraft used to record data, like tool and armour durability, saved structures, fireworks, and banners.</p>
+<h3 id="comparing-arbitrary-nbt-values"><a class="header" href="#comparing-arbitrary-nbt-values">Comparing Arbitrary NBT Values</a></h3>
+<p>How can be used to test if any given NBT values are equal?</p>
+<p>The idea is to attempt to write both values to the same location, where the second operation will result in either a success or a failure depending on whether they are equal.
+The explanation as to why this works is that if the values are equal, the second operation attempts to write a value that already exists in the destination, and therefore not change anything and give a negative success.</p>
+<p>An example function that compares the NBT values at <code>storage kp:temp value.A</code> and <code>storage kp:temp value.B</code>, and stores the result in the <code>not_equal kp.temp</code> fake player:</p>
+<pre><code class="language-mcfunction"># Create 'kp.temp' objective
+scoreboard objectives add kp.temp dummy
+# Prepare storage values
+data modify storage kp:temp value.A set value &quot;string 1&quot;
+data modify storage kp:temp value.B set value &quot;string 2&quot;
+
+# Copy both values to 'storage kp:temp compare', store success of second operation
+data modify storage kp:temp compare set from storage kp:temp value.A
+execute store success score not_equal kp.temp run data modify storage kp:temp compare set from storage kp:temp value.B
+
+# Print result
+execute if score not_equal kp.temp matches 0 run tellraw @a &quot;The storage values are equal.&quot;
+execute if score not_equal kp.temp matches 1 run tellraw @a &quot;The storage values are different.&quot;
 </code></pre>
 
                     </main>
@@ -172,9 +191,13 @@
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="marker_entities.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
                         
-                            <a rel="next" href="common_tricks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="custom_recipes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -186,9 +209,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a rel="prev" href="marker_entities.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
                 
-                    <a rel="next" href="common_tricks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="custom_recipes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
